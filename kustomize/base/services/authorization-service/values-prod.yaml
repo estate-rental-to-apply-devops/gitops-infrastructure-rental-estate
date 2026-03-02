@@ -1,0 +1,19 @@
+# Example values for prod - with higher availability
+replicaCount: 3
+
+image:
+  repository: auth-service
+  tag: 1.0.0
+
+service:
+  type: ClusterIP
+  port: 9000
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: "prod"
+
+configMapData:
+  CONFIG_SERVER_URL: "http://config-service-prod:8888"
+  USER_MANAGEMENT_SERVICE_URL: "http://user-management-service-prod:8081"
+  JWT_ISSUER: "https://auth.estate-rental.com"

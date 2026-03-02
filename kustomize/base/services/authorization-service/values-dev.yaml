@@ -1,0 +1,36 @@
+# authorization-service values for dev
+
+replicaCount: 1
+
+image:
+  repository: auth-service
+  tag: 1.0.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 9000
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: "dev"
+  - name: CONFIG_SERVER_URL
+    valueFrom:
+      configMapKeyRef:
+        name: auth-server-config
+        key: CONFIG_SERVER_URL
+  - name: USER_MANAGEMENT_SERVICE_URL
+    valueFrom:
+      configMapKeyRef:
+        name: auth-server-config
+        key: USER_MANAGEMENT_SERVICE_URL
+  - name: JWT_ISSUER
+    valueFrom:
+      configMapKeyRef:
+        name: auth-server-config
+        key: JWT_ISSUER
+
+configMapData:
+  CONFIG_SERVER_URL: "http://config-service:8888"
+  USER_MANAGEMENT_SERVICE_URL: "http://user-management-service:8081"
+  JWT_ISSUER: "http://auth-server:9000"

@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+env: []
+#  - name: SPRING_PROFILES_ACTIVE
+#    value: "dev"
+
+configMapData: {}

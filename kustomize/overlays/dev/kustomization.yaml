@@ -1,0 +1,27 @@
+# kustomize/overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/services/authorization-service
+  - ../../base/services/config-service-rental-estate
+  - ../../base/services/gateway-estate-rental-service
+  - ../../base/services/user-management-estate-rental-service
+
+helmCharts:
+  - name: microservice
+    repo: ../../../charts/microservice
+    releaseName: authorization-service
+    valuesFile: ../../base/services/authorization-service/values-dev.yaml
+  - name: microservice
+    repo: ../../../charts/microservice
+    releaseName: config-service
+    valuesFile: ../../base/services/config-service-rental-estate/values-dev.yaml
+  - name: microservice
+    repo: ../../../charts/microservice
+    releaseName: gateway-service
+    valuesFile: ../../base/services/gateway-estate-rental-service/values-dev.yaml
+  - name: microservice
+    repo: ../../../charts/microservice
+    releaseName: user-management-service
+    valuesFile: ../../base/services/user-management-estate-rental-service/values-dev.yaml
