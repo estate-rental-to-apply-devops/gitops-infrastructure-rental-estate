@@ -1,27 +1,25 @@
-# gateway-service values for dev
-
 replicaCount: 1
 
 image:
   repository: gateway-service
-  tag: 1.0.0
+  tag: local
   pullPolicy: IfNotPresent
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 8880
 
 env:
   - name: SPRING_PROFILES_ACTIVE
     value: "dev"
   - name: CONFIG_SERVER_URL
-    value: "http://config-service:8888"
+    value: "http://config-service-microservice:8888"
   - name: FRONTEND_URL
-    value: "http://frontend:3000"
+    value: "http://estate-rental.local"
   - name: AUTH_SERVER_URL
-    value: "http://auth-server:9000"
+    value: "http://authorization-service-microservice:9000"
   - name: USER_MANAGEMENT_SERVICE_URL
-    value: "http://user-management-service:8081"
+    value: "http://user-management-service-microservice:8081"
   - name: RENTAL_AGREEMENT_URL
     value: "http://rental-agreement-service:8082"
   - name: PROPERTY_MICROSERVICE_URL
@@ -29,12 +27,8 @@ env:
   - name: NOTIFICATION_MICROSERVICE_URL
     value: "http://notification-service:8084"
   - name: OAUTH_CLIENT_ID
-    valueFrom:
-      secretKeyRef:
-        name: gateway-secrets
-        key: OAUTH_CLIENT_ID
+    value: "authentification-service-client"
   - name: OAUTH_CLIENT_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: gateway-secrets
-        key: OAUTH_CLIENT_SECRET
+    value: "authentification-service-secret"
+  - name: app.cors.allowed-origins
+    value: "http://estate-rental.local"

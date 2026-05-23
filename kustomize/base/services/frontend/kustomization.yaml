@@ -1,11 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Définition globale du dossier contenant tes charts locaux
 helmGlobals:
   chartHome: ../../../../charts
 
 helmCharts:
   - name: microservice
-    releaseName: gateway-service
+    releaseName: frontend
     valuesFile: values-dev.yaml

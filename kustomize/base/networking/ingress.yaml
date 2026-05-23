@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: estate-rental-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: estate-rental.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-microservice
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway-service-microservice
+                port:
+                  number: 8880
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: authorization-service-microservice
+                port:
+                  number: 9000

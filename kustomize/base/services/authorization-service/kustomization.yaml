@@ -1,12 +1,11 @@
-# kustomize/base/services/authorization-service/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# Définition globale du dossier contenant tes charts locaux
+helmGlobals:
+  chartHome: ../../../../charts
+
 helmCharts:
   - name: microservice
-    repo: ../../../../charts/microservice
     releaseName: authorization-service
-    valuesInline:
-      # Placeholder or common base values
-      service:
-        port: 9000
+    valuesFile: values-dev.yaml

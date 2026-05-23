@@ -7,5 +7,5 @@ helmGlobals:
 
 helmCharts:
   - name: microservice
-    releaseName: gateway-service
+    releaseName: user-management-service
     valuesFile: values-dev.yaml

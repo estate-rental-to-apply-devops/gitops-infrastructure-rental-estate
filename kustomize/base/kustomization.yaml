@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - services/authorization-service
-  - services/config-service-rental-estate
   - services/gateway-estate-rental-service
-  - services/user-management-estate-rental-service
+  - services/frontend
+  - services/config-service
+  - services/authorization-service
+  - services/user-management-service
+  - networking

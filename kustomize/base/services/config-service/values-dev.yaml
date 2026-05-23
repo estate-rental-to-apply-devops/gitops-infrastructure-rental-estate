@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: "config_service_estate_rental"
+  tag: "local"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8888
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: "dev"
+  # URL du dépôt de configuration (GitHub par défaut)
+  - name: CONFIG_REPO_URI
+    value: "https://github.com/ahyahya1616/config-repo-estate-rental.git"
+  # Si vous souhaitez utiliser le repo local, il faudrait configurer un volume hostPath 
+  # et utiliser le profil 'native', ce qui nécessite que Kind ait accès au dossier hôte.
