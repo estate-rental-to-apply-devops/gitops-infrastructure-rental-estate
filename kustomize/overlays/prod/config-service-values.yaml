@@ -1,0 +1,17 @@
+fullnameOverride: config-service
+replicaCount: 1
+
+image:
+  repository: 240797212774.dkr.ecr.eu-west-1.amazonaws.com/gitops-estate/config-service
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8888
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: "prod"
+  - name: CONFIG_REPO_URI
+    value: "https://github.com/ahyahya1616/config-repo-estate-rental.git"

@@ -14,6 +14,15 @@ spec:
       labels:
         {{- include "microservice.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "microservice.fullname" . }}
+      {{- else if .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- end }}
+      {{- if .Values.initContainers }}
+      initContainers:
+        {{- toYaml .Values.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -26,8 +35,29 @@ spec:
           env:
             {{- toYaml .Values.env | nindent 12 }}
           {{- end }}
-          {{- if .Values.configMapData }}
+          {{- if or .Values.configMapData .Values.envFromSecrets }}
           envFrom:
+          {{- if .Values.configMapData }}
             - configMapRef:
                 name: {{ include "microservice.fullname" . }}-config
           {{- end }}
+          {{- range .Values.envFromSecrets }}
+            - secretRef:
+                name: {{ .name }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.secretProviderClass.enabled }}
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          {{- end }}
+      {{- if .Values.secretProviderClass.enabled }}
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ .Values.secretProviderClass.name | quote }}
+      {{- end }}
