@@ -7,13 +7,19 @@ image:
 
 service:
   type: NodePort
-  port: 8080
+  port: 8880
 
 env:
   - name: SPRING_PROFILES_ACTIVE
     value: "prod"
   - name: CONFIG_SERVER_URL
     value: "http://config-service:8888"
+  - name: AUTH_SERVER_URL
+    value: "http://authorization-service-microservice:9000"
+  - name: USER_MANAGEMENT_SERVICE_URL
+    value: "http://user-management-service-microservice:8081"
+  - name: JAVA_OPTS
+    value: "-Xmx384m -DUSER-MANAGEMENT-SERVICE-URL=http://user-management-service-microservice:8081 -DAUTH_SERVER_URL=http://authorization-service-microservice:9000"
 
 initContainers:
   - name: wait-for-config
@@ -27,6 +33,8 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: gitops-estate
+    alb.ingress.kubernetes.io/group.order: "10"
+    alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
   hosts:
     - host: ""
       paths:
@@ -34,4 +42,4 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              port: 8080
+              port: 8880

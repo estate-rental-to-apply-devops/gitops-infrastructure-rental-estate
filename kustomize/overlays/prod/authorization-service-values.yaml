@@ -10,10 +10,18 @@ service:
   port: 9000
 
 env:
+  - name: SPRING_APPLICATION_NAME
+    value: "authorization-service"
   - name: SPRING_PROFILES_ACTIVE
     value: "prod"
   - name: CONFIG_SERVER_URL
     value: "http://config-service:8888"
+  - name: JWT_ISSUER
+    value: "http://authorization-service-microservice:9000"
+  - name: USER_MANAGEMENT_SERVICE_URL
+    value: "http://user-management-service-microservice:8081"
+  - name: JAVA_OPTS
+    value: "-Xmx384m -DUSER-MANAGEMENT-SERVICE-URL=http://user-management-service-microservice:8081"
 
 initContainers:
   - name: wait-for-config

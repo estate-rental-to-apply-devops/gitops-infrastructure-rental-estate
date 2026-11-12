@@ -17,6 +17,8 @@ env:
   # You will need to replace <RDS_ENDPOINT> with your actual aws_db_instance.mysql.address from Terraform
   - name: PROD_DB_URL
     value: "jdbc:mysql://gitops-estate-mysql.c9se8e248j5b.eu-west-1.rds.amazonaws.com:3306/userdb?createDatabaseIfNotExist=true&useSSL=false"
+  - name: JAVA_OPTS
+    value: "-Xmx384m"
 
 envFromSecrets:
   - name: mysql-db-credentials-secret

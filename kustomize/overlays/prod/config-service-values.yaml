@@ -15,3 +15,5 @@ env:
     value: "prod"
   - name: CONFIG_REPO_URI
     value: "https://github.com/ahyahya1616/config-repo-estate-rental.git"
+  - name: JAVA_OPTS
+    value: "-Xmx256m"
