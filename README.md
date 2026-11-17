@@ -6,6 +6,10 @@ This repository is the **declarative single source of truth** for all Kubernetes
 
 ## 🏛 GitOps Architecture
 
+![GitOps ```mermaid CI-CD Continuous Delivery Flow](assets/gitops_cicd_architecture.png)
+
+<details><summary>Click to view Mermaid Diagram</summary>
+
 ```mermaid
 flowchart TD
     subgraph GitOpsRepository["GitOps Repository (gitops-infrastructure-rental-estate)"]
@@ -33,7 +37,11 @@ flowchart TD
     end
 
     Reconcile -->|Applies overlays/dev| DevCluster
+
+</details>
     Reconcile -->|Applies overlays/prod| ProdCluster
+
+</details>
 ```
 
 ---
